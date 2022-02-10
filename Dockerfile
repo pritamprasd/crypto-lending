@@ -19,7 +19,7 @@ RUN pip3 install py-solc-x
 RUN python3 -m solcx.install v0.8.6
 
 ENTRYPOINT [ "geth", "--dev", \
-                "--datadir=~/.ethereum", \
+                "--datadir=/app/.ethereum", \
                 "--http", \
                 "--http.corsdomain='*'", \
                 "--http.vhosts='*'", \
@@ -27,4 +27,3 @@ ENTRYPOINT [ "geth", "--dev", \
                 "--http.api=eth,web3",\
                 "--networkid=123698745"\
             ]
-
