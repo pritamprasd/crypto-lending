@@ -7,8 +7,8 @@
 
 
 
-### Influxdb setup:
-    - curl -XP OST "http://127.0.0.1:8086/query" --data-urlencode "q=CREATE USER admin WITH PASSWORD 'password' WITH ALL PRIVILEGES"
+### commands:
+- sudo rm -rf geth-dev-data/ && docker-compose up --build
 
 #### Cool links:
 - http://ethviewer.live/

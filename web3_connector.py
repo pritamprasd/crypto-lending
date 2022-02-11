@@ -33,7 +33,7 @@ def create_txn_from_contract(w3, contract_path, acc):
     txn = contract.constructor().buildTransaction({"from": acc}); 
     return txn
 
-def add_txn_to_chain(w3, txn):
+def send_txn_to_chain(w3, txn):
     txn_hash = w3.eth.send_transaction(txn)
     txn_receipt = w3.eth.wait_for_transaction_receipt(txn_hash)
     return txn_receipt

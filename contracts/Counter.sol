@@ -21,5 +21,9 @@ contract Counter {
         return counter;
     }
 
+    function balance() public returns (uint256){
+        return address(this).balance;
+    }
+
     
 }
