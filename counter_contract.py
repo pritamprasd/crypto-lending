@@ -13,7 +13,11 @@ class CounterContract:
 
     def upload_contract(self, acc_addr):
         print(f"\U0001F449 UPLOAD: counter..")
-        counter_txn = create_txn_from_contract(self.w3, 'contracts/Counter.sol', acc_addr)
+        counter_txn = create_txn_from_contract(self.w3, 'contracts/Counter.sol','Counter.sol', 
+            {
+                "from": acc_addr
+            }
+        )
         txn_receipt = send_txn_to_chain(self.w3, counter_txn)
         self.hash = txn_receipt['contractAddress']
         print(f"Txn data: {txn_receipt}")

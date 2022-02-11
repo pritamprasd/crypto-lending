@@ -21,9 +21,9 @@ RUN python3 -m solcx.install v0.8.6
 ENTRYPOINT [ "geth", "--dev", \
                 "--datadir=/app/.ethereum", \
                 "--http", \
-                "--http.corsdomain='*'", \
-                "--http.vhosts='*'", \
+                "--http.corsdomain=*", \
+                "--http.vhosts=*", \
                 "--http.addr=0.0.0.0", \
-                "--http.api=eth,web3",\
-                "--networkid=123698745"\
+                "--http.api=web3,eth,debug,personal,net", \
+                "--networkid=123698745" \
             ]

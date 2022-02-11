@@ -5,7 +5,7 @@ class Contract:
         self.abi = abi
         self.bytecode = bytecode
 
-def compile_sol(contract_path: str):
+def compile_sol(contract_path: str, contract_file_name:str):
     """Compiles Solidity contracts to 
 
     Args:
@@ -14,11 +14,11 @@ def compile_sol(contract_path: str):
     Returns:
         [ABI, bytecode]
     """
-    file = "Counter.sol"
+    contract_name = contract_file_name.split(".")[0]
     spec = {
             "language": "Solidity",
             "sources": {
-                file: {
+                contract_file_name: {
                     "urls": [
                         contract_path
                     ]
@@ -38,6 +38,6 @@ def compile_sol(contract_path: str):
             }
         };
     out = solcx.compile_standard(spec, allow_paths=".");
-    abi = out['contracts']['Counter.sol']['Counter']['abi']
-    bytecode = out['contracts']['Counter.sol']['Counter']['evm']['bytecode']['object']
+    abi = out['contracts'][contract_file_name][contract_name]['abi']
+    bytecode = out['contracts'][contract_file_name][contract_name]['evm']['bytecode']['object']
     return Contract(abi, bytecode)
