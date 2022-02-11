@@ -1,5 +1,4 @@
 import web3
-import time
 from web3.middleware import geth_poa_middleware
 from solidity_compiler import compile_sol
 
@@ -52,8 +51,8 @@ def add_balance(w3, from_acc, to_acc, balance):
     print(f"\U0001F4BB Transferred {balance}, wei to account {to_acc}")
 
 def create_txn_from_contract(w3, contract_path, contract_filename, initial_param={}, other_param={}):
-    contract = compile_sol(contract_path, contract_filename)
-    contract = w3.eth.contract(bytecode=contract.bytecode, abi=contract.abi)
+    contract_data = compile_sol(contract_path, contract_filename)
+    contract = w3.eth.contract(bytecode=contract_data.bytecode, abi=contract_data.abi)
     txn = contract.constructor(**other_param).buildTransaction(initial_param); 
     return txn
 

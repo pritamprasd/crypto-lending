@@ -1,6 +1,6 @@
 import solcx
 
-class Contract:
+class ContractData:
     def __init__(self, abi, bytecode):
         self.abi = abi
         self.bytecode = bytecode
@@ -40,4 +40,4 @@ def compile_sol(contract_path: str, contract_file_name:str):
     out = solcx.compile_standard(spec, allow_paths=".");
     abi = out['contracts'][contract_file_name][contract_name]['abi']
     bytecode = out['contracts'][contract_file_name][contract_name]['evm']['bytecode']['object']
-    return Contract(abi, bytecode)
+    return ContractData(abi, bytecode)
