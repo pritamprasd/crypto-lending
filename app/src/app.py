@@ -1,4 +1,5 @@
 import time
+import traceback
 from flask import Flask, g, request
 from timeit import default_timer as timer
 from routes import DEV_BLUEPRINT, USER_BLUEPRINT
@@ -25,6 +26,7 @@ def create_app():
     def before_request_func():
         g.start = timer()        
         print(f"Received {request.method} request at {request.base_url} and data {str(request.json)}")
+
     @app.after_request
     def after_request_func(response):
         diff = (timer() - g.start) if "start" in g else 0
@@ -33,8 +35,8 @@ def create_app():
         response.headers['Access-Control-Allow-Origin'] = "*"
         return response
     @app.errorhandler(Exception)
-    def handle_exception(e):
-        print(e)            
+    def handle_exception(e):        
+        traceback.print_exc()
         return {
             'error': f"{e}",
             'timestamp': time.time()

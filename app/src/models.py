@@ -1,5 +1,3 @@
-from email.policy import default
-import uuid
 from weakref import WeakValueDictionary
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import aliased
@@ -71,7 +69,7 @@ class AuditMixin(object):
     updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
 
 class User(db.Model, BaseModel, AuditMixin, metaclass=MetaBaseModel):
-    __tablename__ = "users"
+    __tablename__ = "users"    
     wallet_address = db.Column(db.String, nullable=False)
     wallet_key = db.Column(db.String, nullable=True)
     password_hash = db.Column(db.String, nullable=False)
@@ -82,6 +80,9 @@ class User(db.Model, BaseModel, AuditMixin, metaclass=MetaBaseModel):
     internal_key = db.Column(db.String, nullable=True)
     internal_address = db.Column(db.String, nullable=True)
 
+    __table_args__ = (
+        db.UniqueConstraint('wallet_address'),
+    )
     print_filter = (wallet_key, password_hash, internal_key)
     to_json_filter = (wallet_key, password_hash, internal_key)
 

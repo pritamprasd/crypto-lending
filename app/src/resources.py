@@ -1,10 +1,11 @@
 from flask_restful import Resource
-from flask import jsonify, request
+from flask import jsonify, request, g
+import sqlalchemy
 from schema import UserCreateSchema, UserSchema
 from models import User, db
 from hashlib import sha256
 from utils import jwt_handler
-import json
+from auth_utils import requires_auth
 class HealthResource(Resource):
     def get(self):
         db.engine.execute('SELECT 1')
@@ -13,8 +14,10 @@ class HealthResource(Resource):
 class LoginResource(Resource):
     def post(self):
         req_data = UserCreateSchema().load(request.json)
-        password_hash = sha256(req_data['password'].encode('utf-8')).hexdigest()
         user = User.query.filter(User.wallet_address == req_data['wallet_address']).first()
+        if user is None:
+            raise Exception('User not found')
+        password_hash = sha256(req_data['password'].encode('utf-8')).hexdigest()        
         if password_hash == user.password_hash:
             return{
                 'id': user.id,
@@ -29,16 +32,19 @@ class UserResource(Resource):
         req_data = UserCreateSchema().load(request.json)
         password_hash = sha256(req_data['password'].encode('utf-8')).hexdigest()
         user = User(req_data['wallet_address'], password_hash)
-        user.save()        
+        try:        
+            user.save()        
+        except sqlalchemy.exc.IntegrityError:
+            raise Exception('User Already exists')        
         return{
             'id': user.id,
             'token': jwt_handler.encode(make_jwt_for_user(user))
         }
 
+    @requires_auth()
     def patch(self):
-        token = jwt_handler.decode(request.headers['Authorization'].split(" ")[1])
         req_data = UserSchema().load(request.json)        
-        user:User = User.query.filter(User.id == token['user_id']).first()
+        user:User = User.query.filter(User.id == g.user_id).first()
         if 'wallet_key' in req_data:
             user.wallet_key = req_data['wallet_key']
         if 'username' in req_data:
