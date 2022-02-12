@@ -27,7 +27,7 @@ def main():
     w3 = connect_node(node_url)
     contract = w3.eth.contract(
         address=contract_address, 
-        abi=compile_sol('contracts/LendingContract.sol', 'LendingContract.sol').abi
+        abi=compile_sol('../../contracts/LendingContract.sol', 'LendingContract.sol').abi
     )
     event_filter = w3.eth.filter({'fromBlock':'latest'})
     loop = asyncio.get_event_loop()

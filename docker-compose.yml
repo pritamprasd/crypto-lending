@@ -5,7 +5,7 @@ services:
     ports:
       - 8545:8545
     volumes:
-      - ./geth-dev-data:/app/.ethereum
+      - ./data/geth:/app/.ethereum
 
 
   

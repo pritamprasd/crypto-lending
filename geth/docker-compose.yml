@@ -1,0 +1,9 @@
+version: '3.3'
+services:
+  geth-dev:
+    build: .
+    ports:
+      - 8545:8545
+    volumes:
+      - ./data/geth:/app/.ethereum
+
