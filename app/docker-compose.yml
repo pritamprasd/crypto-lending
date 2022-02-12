@@ -1,5 +1,11 @@
 version: '3.6'
-services:  
+services:
+  backend:
+    build: .
+    ports:
+      - 5555:5555
+    depends_on:
+      - db
   db:
     image: postgres
     ports:
