@@ -1,10 +1,10 @@
 from flask_restful import Resource
 from flask import jsonify, request, g
 import sqlalchemy
-from schema import UserCreateSchema, UserSchema
-from models import User, db
+from schema import AdsSchema, UserCreateSchema, UserSchema
+from models import Ads, User, db
 from hashlib import sha256
-from utils import jwt_handler
+from utils import jwt_handler, make_jwt_for_user
 from auth_utils import requires_auth
 class HealthResource(Resource):
     def get(self):
@@ -60,7 +60,22 @@ class UserResource(Resource):
             'success': True
         }
 
-def make_jwt_for_user(user):
-    return {
-        'user_id': user.id
-    }
+class AdsResource(Resource):
+    @requires_auth()
+    def post(self, adtype):
+        data = AdsSchema().load(request.json)
+        user = User.query.filter(User.id == g.user_id).first()
+        if user is None:
+            raise Exception('User not found')
+        ad = Ads(
+            g.user_id, data['min_amount'], data['max_amount'], data['min_tenure_sec'], 
+            data['max_tenure_sec'],  data['min_interest_rate'], data['max_interest_rate'], adtype)
+        ad.save()
+        return {
+            'id': ad.id
+        }
+
+    @requires_auth()
+    def get(self, adtype):
+        ads = Ads.query.filter(Ads.is_deleted == False).filter(Ads.ad_type == adtype).all()
+        return [ad.to_json() for ad in ads]

@@ -1,4 +1,4 @@
-from marshmallow import EXCLUDE, Schema, fields
+from marshmallow import EXCLUDE, Schema, fields, validate
 
 
 class UserCreateSchema(Schema):
@@ -17,4 +17,12 @@ class UserSchema(Schema):
     mobile = fields.String(data_key='mobile', required=False)
     primary_upi = fields.String(data_key='primaryUpi', required=False)
 
-
+class AdsSchema(Schema):
+    class Meta:
+        unknown = EXCLUDE
+    min_amount = fields.Integer(data_key='minAmount', required=True) #in rupees
+    max_amount = fields.Integer(data_key='maxAmount', required=True)
+    min_tenure_sec = fields.Integer(data_key='minTenure', required=True) #in secs
+    max_tenure_sec = fields.Integer(data_key='maxTenure', required=True)
+    min_interest_rate = fields.Integer(data_key='minInterest', required=True)
+    max_interest_rate = fields.Integer(data_key='maxInterest', required=True)

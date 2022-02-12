@@ -89,3 +89,40 @@ class User(db.Model, BaseModel, AuditMixin, metaclass=MetaBaseModel):
     def __init__(self, wallet_address, password_hash):
         self.wallet_address = wallet_address
         self.password_hash = password_hash
+
+class Ads(db.Model, BaseModel, AuditMixin, metaclass=MetaBaseModel):
+    __tablename__ = "ads"    
+    creator_id = db.Column(db.String, nullable=False)
+    min_amount = db.Column(db.Integer, nullable=False)
+    max_amount = db.Column(db.Integer, nullable=False)
+    min_tenure_sec = db.Column(db.Integer, nullable=False)
+    max_tenure_sec = db.Column(db.Integer, nullable=False)
+    min_interest_rate = db.Column(db.Integer, nullable=False)
+    max_interest_rate = db.Column(db.Integer, nullable=False)
+    ad_type = db.Column(db.String, nullable=False)    
+
+    def __init__(
+        self, creator_id, min_amount, max_amount, min_tenure_sec, 
+        max_tenure_sec, min_interest_rate, max_interest_rate, ad_type
+    ):
+        self.creator_id= creator_id
+        self.min_amount= min_amount
+        self.max_amount= max_amount
+        self.min_tenure_sec= min_tenure_sec
+        self.max_tenure_sec= max_tenure_sec
+        self.min_interest_rate= min_interest_rate
+        self.max_interest_rate= max_interest_rate
+        self.ad_type= ad_type
+    
+    def to_json(self):
+        return{
+            'creator_id': self.creator_id,
+            'min_amount': self.min_amount,
+            'max_amount': self.max_amount,
+            'min_tenure_sec': self.min_tenure_sec,
+            'max_tenure_sec': self.max_tenure_sec,
+            'min_interest_rate': self.min_interest_rate,
+            'max_interest_rate': self.max_interest_rate,
+            'ad_type': self.ad_type
+        }
+
