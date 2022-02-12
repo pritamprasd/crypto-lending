@@ -33,6 +33,7 @@ def create_app():
         print(f"API Turnaround time: {diff} secs for {request.method} : {request.base_url}, data: {str(request.json)}")
         response.headers['Access-Control-Allow-Methods'] = "GET,POST,PATCH"
         response.headers['Access-Control-Allow-Origin'] = "*"
+        response.headers['Access-Control-Allow-Headers'] = "*"
         return response
     @app.errorhandler(Exception)
     def handle_exception(e):        

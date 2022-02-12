@@ -26,3 +26,21 @@ class AdsSchema(Schema):
     max_tenure_sec = fields.Integer(data_key='maxTenure', required=True)
     min_interest_rate = fields.Integer(data_key='minInterest', required=True)
     max_interest_rate = fields.Integer(data_key='maxInterest', required=True)
+
+
+class NegotiationSchema(Schema):
+    class Meta:
+        unknown = EXCLUDE
+    lender_id = fields.String(data_key='lenderId', required=True)
+    amount = fields.Integer(data_key='amount', required=True)
+    interest = fields.Integer(data_key='interest', required=True)
+    tenure = fields.Integer(data_key='tenure', required=True)
+    collateral_amount = fields.Integer(data_key='collateralAmount', required=True)
+    collateral_currency = fields.String(data_key='collateralCurrency', required=True)
+
+class FinalNegotiation(Schema):
+    class Meta:
+        unknown = EXCLUDE
+    amount = fields.Integer(data_key='amount', required=True)
+    interest = fields.Integer(data_key='interest', required=True)
+    tenure = fields.Integer(data_key='tenure', required=True)

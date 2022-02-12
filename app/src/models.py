@@ -116,6 +116,7 @@ class Ads(db.Model, BaseModel, AuditMixin, metaclass=MetaBaseModel):
     
     def to_json(self):
         return{
+            'ad_id': self.id,
             'creator_id': self.creator_id,
             'min_amount': self.min_amount,
             'max_amount': self.max_amount,
@@ -125,4 +126,47 @@ class Ads(db.Model, BaseModel, AuditMixin, metaclass=MetaBaseModel):
             'max_interest_rate': self.max_interest_rate,
             'ad_type': self.ad_type
         }
+
+
+class Negotiation(db.Model, BaseModel, AuditMixin, metaclass=MetaBaseModel):
+    __tablename__ = "negotiation"    
+    lender_id = db.Column(db.String, nullable=False)
+    borrower_id = db.Column(db.String, nullable=False)
+    amount = db.Column(db.Integer, nullable=False)
+    interest = db.Column(db.Integer, nullable=False)
+    tenure = db.Column(db.Integer, nullable=False)
+    currency = db.Column(db.String, nullable=False, default="INR")
+    collateral_amount = db.Column(db.Integer, nullable=False)
+    collateral_currency = db.Column(db.String, nullable=False, default="ETH")
+    collateral_txn_hash = db.Column(db.String, nullable=True)
+    state = db.Column(db.String, nullable=False)
+    active_loan_id = db.Column(db.String, nullable=True)
+    # lender_vpa = db.Column(db.String, nullable=True) #through which lender can pay
+
+    def __init__(self, lender_id, borrower_id, amount, collateral_amount, collateral_currency, interest, tenure):
+        self.lender_id = lender_id
+        self.borrower_id = borrower_id
+        self.amount = amount
+        self.collateral_amount = collateral_amount
+        self.collateral_currency = collateral_currency
+        self.interest = interest
+        self.tenure = tenure
+        self.state = "pending"
+
+    def to_json(self):
+       return{
+           'negotiation_id': self.id,
+           'lender_id': self.lender_id,
+           'borrower_id': self.borrower_id,
+           'amount': self.amount,
+           'interest': self.interest,
+           'currency': self.currency,
+           'collateral_amount': self.collateral_amount,
+           'collateral_currency': self.collateral_currency,
+           'collateral_txn_hash': self.collateral_txn_hash,
+           'state': self.state,
+           'active_loan_id':self.active_loan_id,
+        }
+    
+
 
