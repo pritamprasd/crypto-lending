@@ -136,7 +136,8 @@ class UpdateNegotiationResource(Resource):
                 raise Exception("You're not a part of this negotiation")
             negotiation.state = 'accepted'
             negotiation.save()
-            #TODO: transfer money to escrow wallet, persist tx hash into negotiations
+            #TODO: transfer money to escrow wallet, persist tx hash, into negotiations
+            negotiation.collateral_txn_hash = 'txn_hash'
             negotiation.state = 'borrower_paid'
             negotiation.save()
 
@@ -150,15 +151,30 @@ class UpdateNegotiationResource(Resource):
             if negotiation.borrower_id != user.id:
                 raise Exception("You're not a part of this negotiation")
             negotiation.state = 'deal_done'
-            negotiation.save()
+            negotiation.save()            
             #TODO: create a loan db model here and store id in active_loan_id:negotiation       
-            
+            #TODO: create smart contract, add data(timestamp, maturity) to loan object.
+        elif negotiation.state == 'deal_done':
+            if negotiation.borrower_id != user.id:
+                raise Exception("You're not a part of this negotiation")
+            negotiation.state = 'borrower_repaid'
+            negotiation.save()  
+        elif negotiation.state == 'borrower_repaid':
+            if negotiation.lender_id != user.id:
+                raise Exception("You're not a part of this negotiation")
+            negotiation.state = 'finished'
+            negotiation.save()   
         return {
             **(negotiation.to_json())
         }
             
-            
-
-
+class LoansResource(Resource):
+   
+    @requires_auth()
+    def get(self):
+        negotiations = Negotiation.query.filter(
+            Negotiation.lender_id == g.user_id or Negotiation.borrower_id == g.user_id
+        ).filter(Negotiation.state == "deal_done").all()        
+        return [n.to_json() for n in negotiations]
 
 

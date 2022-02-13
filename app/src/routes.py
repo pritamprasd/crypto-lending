@@ -1,5 +1,5 @@
 from flask import Blueprint
-from resources import AdsResource, UpdateNegotiationResource, HealthResource, LoginResource, NegotiationResource, UserResource
+from resources import AdsResource, LoansResource, UpdateNegotiationResource, HealthResource, LoginResource, NegotiationResource, UserResource
 from flask_restful import Api
 
 DEV_BLUEPRINT = Blueprint("dev", __name__)
@@ -15,3 +15,6 @@ Api(USER_BLUEPRINT).add_resource(UpdateNegotiationResource, "/finaloffer/<string
 Api(USER_BLUEPRINT).add_resource(UpdateNegotiationResource, "/acceptoffer/<string:neg_id>", endpoint="acceptoffer")
 Api(USER_BLUEPRINT).add_resource(UpdateNegotiationResource, "/loanpaid/<string:neg_id>", endpoint="loanpaid")
 Api(USER_BLUEPRINT).add_resource(UpdateNegotiationResource, "/loanreceived/<string:neg_id>", endpoint="loanreceived")
+Api(USER_BLUEPRINT).add_resource(LoansResource, "/getactiveloans", endpoint="getactiveloans")
+Api(USER_BLUEPRINT).add_resource(UpdateNegotiationResource, "/borrowerpays/<string:neg_id>", endpoint="borrowerpays")
+Api(USER_BLUEPRINT).add_resource(UpdateNegotiationResource, "/lenderpays/<string:neg_id>", endpoint="lenderpays")
