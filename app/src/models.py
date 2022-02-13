@@ -1,3 +1,4 @@
+from email.policy import default
 from weakref import WeakValueDictionary
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import aliased
@@ -71,7 +72,9 @@ class AuditMixin(object):
 class User(db.Model, BaseModel, AuditMixin, metaclass=MetaBaseModel):
     __tablename__ = "users"    
     wallet_address = db.Column(db.String, nullable=False)
+    wallet_address_tag = db.Column(db.String, nullable=True)
     wallet_key = db.Column(db.String, nullable=True)
+    wallet_secret = db.Column(db.String, nullable=True)
     password_hash = db.Column(db.String, nullable=False)
     username = db.Column(db.String, nullable=True)
     email = db.Column(db.String, nullable=True)
@@ -79,16 +82,35 @@ class User(db.Model, BaseModel, AuditMixin, metaclass=MetaBaseModel):
     primary_upi = db.Column(db.String, nullable=True)
     internal_key = db.Column(db.String, nullable=True)
     internal_address = db.Column(db.String, nullable=True)
+    wallet_coin_name = db.Column(db.String, nullable=True)
+    wallet_coin_amount = db.Column(db.Integer, nullable=True)
 
     __table_args__ = (
         db.UniqueConstraint('wallet_address'),
     )
-    print_filter = (wallet_key, password_hash, internal_key)
-    to_json_filter = (wallet_key, password_hash, internal_key)
+    print_filter = (wallet_key, wallet_secret, password_hash, internal_key)
+    to_json_filter = (wallet_key, wallet_secret, password_hash, internal_key)
 
-    def __init__(self, wallet_address, password_hash):
+    def __init__(self, wallet_address, password_hash, internal_key, internal_address):
         self.wallet_address = wallet_address
         self.password_hash = password_hash
+        self.internal_key = internal_key
+        self.internal_address = internal_address
+        self.wallet_coin_name = 'MATIC'
+        self.wallet_coin_amount = 15
+
+    def to_json(self):
+        return{
+            'id': self.id,
+            'wallet_address': self.wallet_address,
+            'username': self.username,
+            'email': self.email,
+            'mobile': self.mobile,
+            'primary_upi': self.primary_upi,
+            'wallet_coin_name': self.wallet_coin_name,
+            'wallet_coin_amount': self.wallet_coin_amount,
+            'internal_address': self.internal_address,
+        }
 
 class Ads(db.Model, BaseModel, AuditMixin, metaclass=MetaBaseModel):
     __tablename__ = "ads"    
@@ -136,11 +158,14 @@ class Negotiation(db.Model, BaseModel, AuditMixin, metaclass=MetaBaseModel):
     interest = db.Column(db.Integer, nullable=False)
     tenure = db.Column(db.Integer, nullable=False)
     currency = db.Column(db.String, nullable=False, default="INR")
-    collateral_amount = db.Column(db.Integer, nullable=False)
-    collateral_currency = db.Column(db.String, nullable=False, default="ETH")
+    collateral_amount = db.Column(db.Float, nullable=False)
+    collateral_currency = db.Column(db.String, nullable=False, default="BNB")
     collateral_txn_hash = db.Column(db.String, nullable=True)
     state = db.Column(db.String, nullable=False)
-    active_loan_id = db.Column(db.String, nullable=True)
+    smart_contract_hash = db.Column(db.String, nullable=True)
+    contract_created_at = db.Column(db.String, nullable=True)
+    contract_borrower_repaid = db.Column(db.String, nullable=True, default="")
+    contract_lender_repayment = db.Column(db.String, nullable=True, default="")
     # lender_vpa = db.Column(db.String, nullable=True) #through which lender can pay
 
     def __init__(self, lender_id, borrower_id, amount, collateral_amount, collateral_currency, interest, tenure):
@@ -158,6 +183,7 @@ class Negotiation(db.Model, BaseModel, AuditMixin, metaclass=MetaBaseModel):
            'negotiation_id': self.id,
            'lender_id': self.lender_id,
            'borrower_id': self.borrower_id,
+           'tenure': self.tenure,
            'amount': self.amount,
            'interest': self.interest,
            'currency': self.currency,
@@ -165,7 +191,10 @@ class Negotiation(db.Model, BaseModel, AuditMixin, metaclass=MetaBaseModel):
            'collateral_currency': self.collateral_currency,
            'collateral_txn_hash': self.collateral_txn_hash,
            'state': self.state,
-           'active_loan_id':self.active_loan_id,
+           'smart_contract_hash':self.smart_contract_hash,
+           'contract_created_at': self.contract_created_at,
+           'contract_borrower_repaid': self.contract_borrower_repaid,
+           'contract_lender_repayment': self.contract_lender_repayment,
         }
     
 

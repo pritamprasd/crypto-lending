@@ -3,6 +3,8 @@ import config
 import jwt
 import time
 from jwt.exceptions import ExpiredSignatureError, InvalidTokenError
+from eth_account import Account
+import secrets
 
 EXPIRY_DELTA = 5 * 60
 
@@ -34,3 +36,13 @@ def make_jwt_for_user(user):
     return {
         'user_id': user.id
     }
+
+def generate_keypair():
+    priv = secrets.token_hex(32)
+    private_key = "0x" + priv
+    acct = Account.from_key(private_key)
+    return{
+        'key': private_key,
+        'address': acct.address
+    }
+

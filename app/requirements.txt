@@ -7,3 +7,5 @@ psycopg2==2.9.3
 flask-restful==0.3.9
 marshmallow==3.14.1
 pyjwt==2.3.0
+python-binance==1.0.15
+celery==5.2.3

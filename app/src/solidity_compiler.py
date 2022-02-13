@@ -6,14 +6,6 @@ class ContractData:
         self.bytecode = bytecode
 
 def compile_sol(contract_path: str, contract_file_name:str):
-    """Compiles Solidity contracts to 
-
-    Args:
-        contract_path (str): [description]
-
-    Returns:
-        [ABI, bytecode]
-    """
     contract_name = contract_file_name.split(".")[0]
     spec = {
             "language": "Solidity",

@@ -18,9 +18,9 @@ def create_app():
     app.register_blueprint(USER_BLUEPRINT)
 
     db.init_app(app)
-    with app.app_context():
-        db.drop_all()
-        db.create_all()
+    # with app.app_context():
+    #     db.drop_all()
+    #     db.create_all()
 
     @app.before_request
     def before_request_func():

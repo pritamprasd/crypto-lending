@@ -8,22 +8,27 @@ contract LendingContract {
     address immutable borrower; // only admin can set
     address immutable lender; // only admin can set
     address immutable escrow_wallet;  // only admin can set
-    uint256 immutable maturity_timestamp; // only admin can set, timestamp before which this contract cant be executed
+    uint256 immutable _created_at; // only admin can set, timestamp before which this contract cant be executed
+    uint256 immutable _tenure_delta;
     uint immutable no_of_tokens; // only admin can set
+    string _token_type; // only admin can set
     bool borrower_paid; // only B can set, default false
     bool lender_received; // only L can set, default false
     string temp_status ="initialized"; // only L can set, default false
+    string status ="initialized"; // only L can set, default false
 
-    event StateChange(string);
+    // event StateChange(string);
 
-    constructor(address b, address l, address escrow, uint256 tenure_delta, uint token) {
+    constructor(address b, address l, address escrow, uint256 created_at, uint256 tenure_delta, uint token_amount, string memory token_type) {
         require(b != l, 'Lender and Borrower address cant be the same');
         admin = msg.sender;
         borrower = b;
         lender = l;
         escrow_wallet = escrow;
-        maturity_timestamp = block.timestamp + tenure_delta;
-        no_of_tokens = token;
+        _created_at = created_at;
+        _tenure_delta = tenure_delta;
+        no_of_tokens = token_amount;
+        _token_type = token_type;
         borrower_paid = false;
         lender_received = false;
     }
@@ -33,14 +38,14 @@ contract LendingContract {
         require(borrower == msg.sender, "You're not the borrower");
         borrower_paid = true;
         temp_status = string(abi.encodePacked(temp_status," -> ", "borrower_paid"));
-        emit StateChange("Borrower Approved");
+        // emit StateChange("Borrower Approved");
     }
 
     function approve_lender() external {
         require(lender == msg.sender,  "You're not the lender");
         lender_received = true;
         temp_status = string(abi.encodePacked(temp_status," -> ", "lender_received"));
-        emit StateChange("Lender Approved");
+        // emit StateChange("Lender Approved");
     }
 
     function transfer_tokens() external {
@@ -49,23 +54,30 @@ contract LendingContract {
         if(lender_received == true){
             //escrow to B 
             temp_status = string(abi.encodePacked(temp_status," -> ", "excrow=>Borrower"));
-            emit StateChange("excrow=>Borrower");
+            // emit StateChange("excrow=>Borrower");
+            status = "collateral_returned";
         }
         else{
             if(borrower_paid == false){
                 // escro to L
                 temp_status = string(abi.encodePacked(temp_status," -> ", "excrow=>Lender"));
-                emit StateChange("excrow=>Lender");
+                // emit StateChange("excrow=>Lender");
+                status = "defaulted";
             }else{
                 // raise dispute
                 temp_status = string(abi.encodePacked(temp_status," -> ", "excrow=>Dispute"));
-                emit StateChange("excrow=>Dispute");
+                // emit StateChange("excrow=>Dispute");
+                status = "disputed";
             }
         }
     }
 
-    function get_status() public returns (string memory) {
+    function get_status() public view returns (string memory) {
         return temp_status;
+    }
+
+    function get_contract_state() public view returns (string memory) {
+        return status;
     }
 
 }

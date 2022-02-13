@@ -6,10 +6,8 @@ def connect_node(url):
     w3 = web3.Web3(web3.HTTPProvider(url))      
     if not w3.isConnected():  
         raise Exception('Connetion to Node {url} failed !!')
-    print("Connection data:")
-    print(f"\t chain_id:{w3.eth.chain_id}")
     w3.middleware_onion.inject(geth_poa_middleware, layer=0)        
-    return w3    
+    return w3
 
 def create_account(w3: web3.Web3):
     pas = 'hello@123'

@@ -16,6 +16,8 @@ class UserSchema(Schema):
     email = fields.String(data_key='email', required=False)
     mobile = fields.String(data_key='mobile', required=False)
     primary_upi = fields.String(data_key='primaryUpi', required=False)
+    wallet_secret = fields.String(data_key='walletSecret', required=False)
+    wallet_address_tag = fields.String(data_key='walletAddressTag', required=False)
 
 class AdsSchema(Schema):
     class Meta:
@@ -35,7 +37,7 @@ class NegotiationSchema(Schema):
     amount = fields.Integer(data_key='amount', required=True)
     interest = fields.Integer(data_key='interest', required=True)
     tenure = fields.Integer(data_key='tenure', required=True)
-    collateral_amount = fields.Integer(data_key='collateralAmount', required=True)
+    collateral_amount = fields.Float(data_key='collateralAmount', required=True)
     collateral_currency = fields.String(data_key='collateralCurrency', required=True)
 
 class FinalNegotiation(Schema):

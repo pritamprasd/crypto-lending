@@ -30,3 +30,14 @@ def setup_demo_accounts(accounts, w3, admin_acc):
     print(f"\U0001F4B0 Admin: {accounts['admin']['address']}, Balance: {get_balance(w3, accounts['admin']['address'])}")
     print(f"\U0001F4B0 Lender: {accounts['lender']['address']}, Balance: {get_balance(w3, accounts['lender']['address'])}")
     print(f"\U0001F4B0 Borrower: {accounts['borrower']['address']}, Balance: {get_balance(w3, accounts['borrower']['address'])}")
+
+
+if __name__ == '__main__':
+    from eth_account import Account
+    import secrets
+    priv = secrets.token_hex(32)
+    private_key = "0x" + priv
+    print ("SAVE BUT DO NOT SHARE THIS:", private_key)
+    acct = Account.from_key(private_key)
+    print("Address:", acct.address)
+

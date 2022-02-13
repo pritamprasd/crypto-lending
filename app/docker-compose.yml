@@ -1,11 +1,11 @@
 version: '3.6'
 services:
-  backend:
-    build: .
-    ports:
-      - 5555:5555
-    depends_on:
-      - db
+  # backend:
+  #   build: .
+  #   ports:
+  #     - 5555:5555
+  #   depends_on:
+  #     - db
   db:
     image: postgres
     ports:
@@ -22,3 +22,22 @@ services:
       interval: 10s
       timeout: 45s
       retries: 10
+
+  # redis:
+  #   image: redis    
+  #   ports:
+  #     - "6379:6379"
+
+  # celery-flower: 
+  #   image: mher/flower
+  #   ports: 
+  #     - "3008:5555"
+
+  # beat:
+  #   build: ./Dockerfile.beat
+  #   ports:
+  #     - 3010:3009
+
+
+
+  
