@@ -12,7 +12,7 @@ import Axios from "../../config/Axios";
 const SignIn = () => {
     const [formData, setFormData] = useState({
         walletAddress: "",
-        password: "123456",
+        password: "",
     });
     const dispatch = useDispatch();
     const navigate = useNavigate();

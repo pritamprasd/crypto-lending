@@ -32,7 +32,7 @@ const BorrowerDetails = () => {
     const [formData, setFormData] = useState({
         lenderId: selectedLender.creator_id,
         collateralAmount: 1,
-        collateralCurrency: "ETH",
+        collateralCurrency: "MATIC",
     });
 
     const onChange = (e) => {
