@@ -4,6 +4,7 @@ Lend money(fiat currency) with Cryptocurrency as collateral on ethereum blockcha
 We connect lenders to borrowers in a P2P Defi manner, where borrower provides crypto collateral to get a loan, and outcome of this loan (`borrower-defaulted`, `borrower-repaid`, `dispute`) is being governed by a samrt contract which we create when loan has been disbursed.
 
 - Currency supported : `MATIC`, `ETH`
+- Fiat supported : `INR`
 
 ## Setup:
 1. Start `geth` the private blockchain:
