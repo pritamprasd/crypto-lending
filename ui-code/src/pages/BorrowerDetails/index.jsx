@@ -31,7 +31,7 @@ const BorrowerDetails = () => {
 
     const [formData, setFormData] = useState({
         lenderId: selectedLender.creator_id,
-        collateralAmount: 15,
+        collateralAmount: 20,
         collateralCurrency: "MATIC",
     });
 
