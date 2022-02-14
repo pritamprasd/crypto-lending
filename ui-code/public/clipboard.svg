@@ -1,0 +1,29 @@
+<svg width="122" height="47" viewBox="0 0 122 47" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 30">
+<g id="Bottom sheet" filter="url(#filter0_ddd_50_2239)">
+<path d="M10 16H112V28C112 32.4183 108.418 36 104 36H18C13.5817 36 10 32.4183 10 28V16Z" fill="#896173"/>
+</g>
+<path id="Ellipse 4" d="M77 16C77 13.8989 76.5861 11.8183 75.7821 9.87706C74.978 7.93586 73.7994 6.17203 72.3137 4.68629C70.828 3.20055 69.0641 2.022 67.1229 1.21793C65.1817 0.413852 63.1011 -9.18442e-08 61 0C58.8988 9.18442e-08 56.8183 0.413852 54.8771 1.21793C52.9359 2.022 51.172 3.20055 49.6863 4.68629C48.2006 6.17203 47.022 7.93586 46.2179 9.87707C45.4139 11.8183 45 13.8989 45 16L61 16H77Z" fill="#896173"/>
+</g>
+<defs>
+<filter id="filter0_ddd_50_2239" x="0" y="7" width="122" height="40" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="2"/>
+<feGaussianBlur stdDeviation="2"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_50_2239"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="1"/>
+<feGaussianBlur stdDeviation="5"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0"/>
+<feBlend mode="normal" in2="effect1_dropShadow_50_2239" result="effect2_dropShadow_50_2239"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="4"/>
+<feGaussianBlur stdDeviation="2.5"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.14 0"/>
+<feBlend mode="normal" in2="effect2_dropShadow_50_2239" result="effect3_dropShadow_50_2239"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect3_dropShadow_50_2239" result="shape"/>
+</filter>
+</defs>
+</svg>
