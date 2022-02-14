@@ -27,6 +27,13 @@ We connect lenders to borrowers in P2P Defi way, where borrower needs provide cr
     docker-compose up -d
     ```
 
+4. Start Crypto-Lending UI:
+    ```sh
+    cd ui-code 
+    yarn
+    yarn start
+    ```
+
 ### Communication between components:
 ![communication diagram](./static/crypto-lending-comm.png)
 
@@ -55,7 +62,14 @@ We connect lenders to borrowers in P2P Defi way, where borrower needs provide cr
 1. Private blockchain viewer:
 ![Blockchain explorer](./static/blockchain-explorer.png)
 
-2. 
+2. UI:
+![Main UI](./static/crypto-lending-ui1.png)
+![Main UI](./static/crypto-lending-ui2.png)
+![Main UI](./static/crypto-lending-ui3.png)
+![Main UI](./static/crypto-lending-ui4.png)
+![Main UI](./static/crypto-lending-ui5.png)
+
+
 
 
 
