@@ -64,12 +64,10 @@ We connect lenders to borrowers in a P2P Defi manner, where borrower provides cr
 
 2. UI:
 ![Main UI](./static/crypto-lending-ui5.png)
-![Main UI](./static/crypto-lending-ui1.png)
-![Main UI](./static/crypto-lending-ui2.png)
-![Main UI](./static/crypto-lending-ui3.png)
 ![Main UI](./static/crypto-lending-ui4.png)
-
-
+![Main UI](./static/crypto-lending-ui3.png)
+![Main UI](./static/crypto-lending-ui2.png)
+![Main UI](./static/crypto-lending-ui1.png)
 
 
 
