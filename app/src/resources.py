@@ -38,12 +38,13 @@ class UserResource(Resource):
         req_data = UserCreateSchema().load(request.json)
         password_hash = sha256(req_data['password'].encode('utf-8')).hexdigest()
         keypair = generate_keypair()
+        #TODO: check if need to call create_account_raw
         lending_contract.add_balance(keypair['address'], 500000000000000000)       
         user = User(req_data['wallet_address'], password_hash, keypair['key'], keypair['address'])
         try:        
             user.save()        
         except sqlalchemy.exc.IntegrityError:
-            raise Exception('User Already exists')        
+            raise Exception('User Already exists') 
         return{
             'id': user.id,
             'token': jwt_handler.encode(make_jwt_for_user(user))
@@ -232,7 +233,7 @@ class UpdateNegotiationResource(Resource):
                 user.internal_address
             )
             negotiation.contract_lender_repayment = True
-            negotiation.state = 'finished'   #defaulted, dispute_raised, collateral_returned
+            negotiation.state = 'finished'
             negotiation.save()   
 
         return {

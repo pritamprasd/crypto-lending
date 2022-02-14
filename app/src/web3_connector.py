@@ -11,25 +11,17 @@ def connect_node(url):
 
 def create_account(w3: web3.Web3):
     pas = 'hello@123'
-    addr = w3.geth.personal.new_account(pas)
-    # w3.geth.personal.unlock_account(addr, pas, 60*60)
-    
+    addr = w3.geth.personal.new_account(pas)  
     return{
-        # 'key': acc.key,
-        # 'address': acc.address
         'address': addr
     }
 
 def create_account_raw(w3: web3.Web3, key: str):
-    pas = 'hello@123'
-    # w3.geth.personal.unlock_account(addr, pas, 60*60)
     try:
         addr = w3.geth.personal.import_raw_key(key, '')
-    except ValueError: #skip recreating test accounts
+    except ValueError:
         return{'address': ''} 
-    return{
-        # 'key': acc.key,
-        # 'address': acc.address
+    return{        
         'address': addr
     }
 
@@ -45,7 +37,7 @@ def add_balance(w3, from_acc, to_acc, balance):
         "to": to_acc,
         "value": balance
     })
-    txn_receipt = w3.eth.waitForTransactionReceipt(txn_hash);
+    w3.eth.waitForTransactionReceipt(txn_hash);
     print(f"\U0001F4BB Transferred {balance}, wei to account {to_acc}")
 
 def create_txn_from_contract(w3, contract_path, contract_filename, initial_param={}, other_param={}):

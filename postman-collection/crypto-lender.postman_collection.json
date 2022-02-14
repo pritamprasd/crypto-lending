@@ -1,0 +1,732 @@
+{
+	"info": {
+		"_postman_id": "1be96586-cf24-496d-a3f9-c9bc1f37c02c",
+		"name": "crypto-lender",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/health",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"pm.globals.set(\"token\", jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"walletAddress\": \"admin\",\n    \"password\": \"passwd@123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/user",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/user",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Lender Login User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"pm.globals.set(\"token\", jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"walletAddress\": \"lender\",\n    \"password\": \"passwd@123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/login",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrower Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"pm.globals.set(\"token\", jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"walletAddress\": \"borrower\",\n    \"password\": \"passwd@123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/login",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"pm.globals.set(\"token\", jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"walletAddress\": \"admin\",\n    \"password\": \"passwd@123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/login",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"walletKey\": \"\",\n    \"username\": \"pkpkpk\",\n    \"email\": \"pkpk@setu.co\",\n    \"mobile\": \"9999999999\",\n    \"primaryUpi\": \"pkpk@upi\",\n    \"wallet_secret\": \"\",\n    \"wallet_address_tag\": \"\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/user",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Lender: Create Lending Ad",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"minAmount\": 100,\n    \"maxAmount\": 3000,\n    \"minTenure\": 3600,\n    \"maxTenure\": 3600000,\n    \"minInterest\": 5,\n    \"maxInterest\": 12\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/ads/lend",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"ads",
+						"lend"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrower: Get Lending Ads",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/ads/lend",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"ads",
+						"lend"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Borrow Ad",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"minAmount\": 100,\n    \"maxAmount\": 1000,\n    \"minTenure\": 3600,\n    \"maxTenure\": 3600000,\n    \"minInterest\": 5,\n    \"maxInterest\": 10\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/ads/borrow",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"ads",
+						"borrow"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Borrow Ads",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/ads/borrow",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"ads",
+						"borrow"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "borrower: Create Negotaion",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"lenderId\": \"577a48d7-0df7-4ca2-942b-8cc0221e782a\",\n    \"amount\": 10000,\n    \"collateralAmount\": 10,\n    \"collateralCurrency\": \"MATIC\",\n    \"interest\": 10,\n    \"tenure\": 60\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/negotiation",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"negotiation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Negotiations for a user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/negotiation",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"negotiation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Lender: Engage",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/engagenegotiation/{{negotiation_id}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"engagenegotiation",
+						"{{negotiation_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Lender: Final offer",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{    \n    \"amount\": 10000,\n    \"interest\": 10,\n    \"tenure\": 30    \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/finaloffer/{{negotiation_id}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"finaloffer",
+						"{{negotiation_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrower: accept offer",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/acceptoffer/{{negotiation_id}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"acceptoffer",
+						"{{negotiation_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Lender: paid the loan amount",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/loanpaid/{{negotiation_id}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"loanpaid",
+						"{{negotiation_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrower: loan received from lender",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/loanreceived/{{negotiation_id}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"loanreceived",
+						"{{negotiation_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all active loans",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/getactiveloans",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"getactiveloans"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrower: loan repayment done",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/borrowerpays/{{negotiation_id}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"borrowerpays",
+						"{{negotiation_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Lender: received loan repayment from borrower",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/lenderpays/{{negotiation_id}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"lenderpays",
+						"{{negotiation_id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -18,9 +18,9 @@ def create_app():
     app.register_blueprint(USER_BLUEPRINT)
 
     db.init_app(app)
-    # with app.app_context():
-    #     db.drop_all()
-    #     db.create_all()
+    if config.RESET_DB:
+        print(f"\U000126A0 \U000126A0 Reseting database \U000126A0 \U000126A0")
+        initialize_db(app, db)
 
     @app.before_request
     def before_request_func():
@@ -31,7 +31,7 @@ def create_app():
     def after_request_func(response):
         diff = (timer() - g.start) if "start" in g else 0
         print(f"API Turnaround time: {diff} secs for {request.method} : {request.base_url}, data: {str(request.json)}")
-        response.headers['Access-Control-Allow-Methods'] = "GET,POST,PATCH"
+        response.headers['Access-Control-Allow-Methods'] = "OPTIONS,GET,POST"
         response.headers['Access-Control-Allow-Origin'] = "*"
         response.headers['Access-Control-Allow-Headers'] = "*"
         return response
@@ -43,6 +43,11 @@ def create_app():
             'timestamp': time.time()
         }
     return app
+
+def initialize_db(app, database):
+    with app.app_context():
+        database.drop_all()
+        database.create_all()
 
 
 if __name__ == '__main__':

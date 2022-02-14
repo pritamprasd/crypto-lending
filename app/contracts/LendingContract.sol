@@ -4,24 +4,24 @@ pragma solidity >=0.8.0 <0.9.0;
 
 contract LendingContract {
 
-    address immutable admin; // only admin can set
-    address immutable borrower; // only admin can set
-    address immutable lender; // only admin can set
-    address immutable escrow_wallet;  // only admin can set
-    uint256 immutable _created_at; // only admin can set, timestamp before which this contract cant be executed
-    uint256 immutable _tenure_delta;
-    uint immutable no_of_tokens; // only admin can set
-    string _token_type; // only admin can set
-    bool borrower_paid; // only B can set, default false
-    bool lender_received; // only L can set, default false
-    string temp_status ="initialized"; // only L can set, default false
-    string status ="initialized"; // only L can set, default false
+    address immutable handler; // admin/contract-initiators address
+    address immutable borrower; // borrower address
+    address immutable lender; // lenders address
+    address immutable escrow_wallet;  // escrow-wallet address
+    uint256 immutable _created_at; // timestamp before which this contract cant be executed
+    uint256 immutable _tenure_delta; // loan tenure in seconds
+    uint immutable no_of_tokens; // collateral token amount
+    string _token_type; // collateral token type
+    bool borrower_paid;
+    bool lender_received;
+    string temp_status ="initialized"; // contract execution logs
+    string status ="initialized"; // contract state
 
-    // event StateChange(string);
+    event StateChange(string);
 
     constructor(address b, address l, address escrow, uint256 created_at, uint256 tenure_delta, uint token_amount, string memory token_type) {
         require(b != l, 'Lender and Borrower address cant be the same');
-        admin = msg.sender;
+        handler = msg.sender;
         borrower = b;
         lender = l;
         escrow_wallet = escrow;
@@ -33,40 +33,35 @@ contract LendingContract {
         lender_received = false;
     }
 
-    // This should be called by admin, when we verify payment from borrower and sender upi.
     function approve_borrower() external {
         require(borrower == msg.sender, "You're not the borrower");
         borrower_paid = true;
         temp_status = string(abi.encodePacked(temp_status," -> ", "borrower_paid"));
-        // emit StateChange("Borrower Approved");
+        emit StateChange("Borrower Approved");
     }
 
     function approve_lender() external {
         require(lender == msg.sender,  "You're not the lender");
         lender_received = true;
         temp_status = string(abi.encodePacked(temp_status," -> ", "lender_received"));
-        // emit StateChange("Lender Approved");
+        emit StateChange("Lender Approved");
     }
 
     function transfer_tokens() external {
-        require(admin == msg.sender,  "You're not the admin");
-        // require(maturity_timestamp > now, "Maturity not reached");
+        require(handler == msg.sender,  "You're not the contract creator");
         if(lender_received == true){
-            //escrow to B 
             temp_status = string(abi.encodePacked(temp_status," -> ", "excrow=>Borrower"));
-            // emit StateChange("excrow=>Borrower");
+            emit StateChange("excrow=>Borrower");
             status = "collateral_returned";
         }
         else{
-            if(borrower_paid == false){
-                // escro to L
+            if(borrower_paid == false){                
                 temp_status = string(abi.encodePacked(temp_status," -> ", "excrow=>Lender"));
-                // emit StateChange("excrow=>Lender");
+                emit StateChange("excrow=>Lender");
                 status = "defaulted";
-            }else{
-                // raise dispute
+            }else{                
                 temp_status = string(abi.encodePacked(temp_status," -> ", "excrow=>Dispute"));
-                // emit StateChange("excrow=>Dispute");
+                emit StateChange("excrow=>Dispute");
                 status = "disputed";
             }
         }
