@@ -1,7 +1,7 @@
 # Crypto Lending Service
 
-Lend money(fiat currency) with Cryptocurrency as collateral with ethereum blockchain as source of trust.
-We connect lenders to borrowers in P2P Defi way, where borrower needs provide crypto collateral to get a loan, and outcome of this loan (`borrower-defaulted`, `borrower-repaid`, `dispute`) is being governed by a samrt contract which we create when loan has been disbursed.
+Lend money(fiat currency) with Cryptocurrency as collateral on ethereum blockchain as source of trust.
+We connect lenders to borrowers in a P2P Defi manner, where borrower provides crypto collateral to get a loan, and outcome of this loan (`borrower-defaulted`, `borrower-repaid`, `dispute`) is being governed by a samrt contract which we create when loan has been disbursed.
 
 - Currency supported : `MATIC`, `ETH`
 
@@ -63,11 +63,11 @@ We connect lenders to borrowers in P2P Defi way, where borrower needs provide cr
 ![Blockchain explorer](./static/blockchain-explorer.png)
 
 2. UI:
-![Main UI](./static/crypto-lending-ui5.png)
 ![Main UI](./static/crypto-lending-ui1.png)
 ![Main UI](./static/crypto-lending-ui2.png)
 ![Main UI](./static/crypto-lending-ui3.png)
 ![Main UI](./static/crypto-lending-ui4.png)
+![Main UI](./static/crypto-lending-ui5.png)
 
 
 
