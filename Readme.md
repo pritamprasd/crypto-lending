@@ -7,9 +7,11 @@ We connect lenders to borrowers in a P2P Defi manner, where borrower provides cr
 - Fiat supported : `INR`
 
 How is this defi?
+
 `User A` sitting in a small town of Rajasthan, India can lend/borrow to/from `User B` sitting in BLR or Mizoram.
 
 How is this web3?
+
 Lender and borrower mutually decide the loan agreements and T&C, lender has the power to decide how much risk he wants to take? in which form he has to take. Unlike p2p lending platform (for pure Fiat lending) where the lender does not know where and how their money is invested. Here lender is fully aware of the digital footprint of the user aka crypto portfolio.
 
 ## Setup:
