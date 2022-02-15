@@ -26,7 +26,7 @@ Lender and borrower mutually decide the loan agreements and T&C, lender has the 
     # set NODE_ENDPOINT vars to your geth server endpoint(default: http://localhost:8545)
     docker-compose up -d
     ```
-- UI will be available at: http://localhost:8081
+- UI will be available at: http://pritamprasad.com
 
 3. Start backend and Database:
     ```sh
